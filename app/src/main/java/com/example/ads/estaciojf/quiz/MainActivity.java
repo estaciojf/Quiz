@@ -42,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
         listRadioButtons.add(radioButton2);
         listRadioButtons.add(radioButton3);
 
+
+        new JsonTask().execute(url);
+
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
