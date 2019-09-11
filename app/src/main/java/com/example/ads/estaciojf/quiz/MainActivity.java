@@ -19,12 +19,21 @@ public class MainActivity extends AppCompatActivity {
     RadioButton radioButton1;
     RadioButton radioButton2;
     RadioButton radioButton3;
+
     List<RadioButton> listRadioButtons;
+
+    ArrayList<Question> listQuestions;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        String url = "http://www.json-generator.com/api/json/get/cpvFduCnsi?indent=2";
+
+        listQuestions = new ArrayList<>();
+        listQuestions.add(new Question());
 
         bindViews();
         listRadioButtons = new ArrayList<RadioButton>();
@@ -77,3 +86,4 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
+
