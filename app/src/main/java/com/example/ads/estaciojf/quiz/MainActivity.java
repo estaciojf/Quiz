@@ -10,6 +10,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -66,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
     private void selectRadioButton (RadioButton radioButton) {
         // ContextCompat.getColor(context, R.color.color_name)
         radioButton.setTextColor(getResources().getColor(R.color.accent));
+        
 
         for (RadioButton radio : listRadioButtons) {
             Log.i("Radio", radio.toString() + " " + radio.isChecked());
