@@ -14,6 +14,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class JsonTask extends AsyncTask<String, String, String> {
 
@@ -71,9 +72,19 @@ public class JsonTask extends AsyncTask<String, String, String> {
 
         try {
             JSONObject listaJson = new JSONObject(result);
-            JSONArray questionario = listaJson.getJSONArray("questionario");
+            JSONArray questions = listaJson.getJSONArray("questions");
 
+            for (int i = 0 ; i < questions.length() ; i ++) {
+                JSONObject question = questions.getJSONObject(i);
 
+                String pergunta = question.getString("question");
+                String opt1 = question.getString("option1");
+                String opt2 = question.getString("option2");
+                String opt3 = question.getString("option3");
+                int answer = question.getInt("answer");
+
+                Question questionModel = new Question(pergunta, opt1, opt2, opt3, answer);
+            }
 
         }catch (JSONException e){e.printStackTrace();}
 
