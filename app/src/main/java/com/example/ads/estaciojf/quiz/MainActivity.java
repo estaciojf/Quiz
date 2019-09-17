@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,11 +34,13 @@ public class MainActivity extends AppCompatActivity {
     RadioButton radioButton1;
     RadioButton radioButton2;
     RadioButton radioButton3;
+    TextView questionText;
 
     // Listas de RadioButtons e Perguntas
     List<RadioButton> listRadioButtons;
     ArrayList<Question> listQuestions;
 
+    int questionId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,8 +96,21 @@ public class MainActivity extends AppCompatActivity {
         radioButton1 = findViewById(R.id.radioButton1);
         radioButton2 = findViewById(R.id.radioButton2);
         radioButton3 = findViewById(R.id.radioButton3);
+        questionText = findViewById(R.id.questionText);
     }
 
+    // Atualiza o texto das opções e pergunta
+    // Recebe como parametro o id da pergunta na base de dados
+    private void atualizaListaPerguntas (int questionId) {
+
+        radioButton1.setText(listQuestions.get(questionId).getOption1());
+        radioButton2.setText(listQuestions.get(questionId).getOption2());
+        radioButton3.setText(listQuestions.get(questionId).getOption3());
+        questionText.setText(listQuestions.get(questionId).getQuestion());
+
+        questionId = questionId;
+
+    }
 
     // Método que altera as cores do RadioButton de acordo com o click
     private void selectRadioButton (RadioButton radioButton) {
@@ -102,12 +119,25 @@ public class MainActivity extends AppCompatActivity {
         // Loop na lista de RadioButtons
         // Verifica se o elemento da iteração está marcado
         // Se não muda a cor
+        int index = 0;
         for (RadioButton radio : listRadioButtons) {
             Log.i("Radio", radio.toString() + " " + radio.isChecked());
+            index ++;
+            if (radio.isChecked())
+                validaResposta(index);
             if (!radio.isChecked())
                 radio.setTextColor(getResources().getColor(R.color.primaryText));
         }
+
     }
+    // Verifica se a resposta é correta
+    private void validaResposta (int radioCheckedId) {
+        Log.i("Valida", radioCheckedId + " - " + listQuestions.get(questionId).getAnswer());
+        if (radioCheckedId == listQuestions.get(questionId).getAnswer()) {
+            Toast.makeText(getApplicationContext(), "Certa resposta!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
     // Classe interna que faz a requisição na base de dados de perguntas
     public class JsonTask extends AsyncTask<String, String, String> {
@@ -181,7 +211,8 @@ public class MainActivity extends AppCompatActivity {
                     listQuestions.add(questionModel);
                 }
 
-                Log.i("Question Main", listQuestions.get(0).getOption2());
+                atualizaListaPerguntas(0);
+//                Log.i("Question Main", listQuestions.get(0).getOption2());
 
 
             }catch (JSONException e){e.printStackTrace();}
