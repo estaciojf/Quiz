@@ -27,13 +27,14 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    // Atributos da classe - Elementos do Layout
     RadioGroup radioGroup;
     RadioButton radioButton1;
     RadioButton radioButton2;
     RadioButton radioButton3;
 
+    // Listas de RadioButtons e Perguntas
     List<RadioButton> listRadioButtons;
-
     ArrayList<Question> listQuestions;
 
 
@@ -42,23 +43,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Endereço da base de perguntas
         String url = "http://www.json-generator.com/api/json/get/coUPnGlShu?indent=2";
 
+        // Inicia a lista de Perguntas
         listQuestions = new ArrayList<>();
 
+        // Método que faz o link entre os atributos da classe e os ids de elementos do layout
         bindViews();
-        listRadioButtons = new ArrayList<RadioButton>();
 
+        // Inicia a lista de RadioButtons e adiciona na lista
+        listRadioButtons = new ArrayList<RadioButton>();
         listRadioButtons.add(radioButton1);
         listRadioButtons.add(radioButton2);
         listRadioButtons.add(radioButton3);
 
-
+        // Faz a consulta na base de perguntas
         new JsonTask().execute(url);
 
-
-
-
+        // Evento que captura o click em qualquer RadioButton
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -83,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // Método que faz o link entre os atributos da classe e os ids de elementos do layout
     private void bindViews () {
         radioGroup = findViewById(R.id.radioGroup);
         radioButton1 = findViewById(R.id.radioButton1);
@@ -90,11 +94,14 @@ public class MainActivity extends AppCompatActivity {
         radioButton3 = findViewById(R.id.radioButton3);
     }
 
-    private void selectRadioButton (RadioButton radioButton) {
-        // ContextCompat.getColor(context, R.color.color_name)
-        radioButton.setTextColor(getResources().getColor(R.color.accent));
-        
 
+    // Método que altera as cores do RadioButton de acordo com o click
+    private void selectRadioButton (RadioButton radioButton) {
+        // Forma atualizada - ContextCompat.getColor(context, R.color.color_name)
+        radioButton.setTextColor(getResources().getColor(R.color.accent));
+        // Loop na lista de RadioButtons
+        // Verifica se o elemento da iteração está marcado
+        // Se não muda a cor
         for (RadioButton radio : listRadioButtons) {
             Log.i("Radio", radio.toString() + " " + radio.isChecked());
             if (!radio.isChecked())
@@ -102,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
+    // Classe interna que faz a requisição na base de dados de perguntas
     public class JsonTask extends AsyncTask<String, String, String> {
 
         protected void onPreExecute() {
