@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        String url = "http://www.json-generator.com/api/json/get/cpvFduCnsi?indent=2";
+        String url = "http://www.json-generator.com/api/json/get/coUPnGlShu?indent=2";
 
         listQuestions = new ArrayList<>();
 
@@ -174,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
                     listQuestions.add(questionModel);
                 }
 
-                Log.i("Question Main", listQuestions.get(0).getOption1());
+                Log.i("Question Main", listQuestions.get(0).getOption2());
 
 
             }catch (JSONException e){e.printStackTrace();}
