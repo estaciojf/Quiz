@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     RadioButton radioButton1;
     RadioButton radioButton2;
     RadioButton radioButton3;
+    TextView questionText;
 
     // Listas de RadioButtons e Perguntas
     List<RadioButton> listRadioButtons;
@@ -92,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
         radioButton1 = findViewById(R.id.radioButton1);
         radioButton2 = findViewById(R.id.radioButton2);
         radioButton3 = findViewById(R.id.radioButton3);
+        questionText = findViewById(R.id.questionText);
     }
 
 
@@ -104,9 +107,26 @@ public class MainActivity extends AppCompatActivity {
         // Se não muda a cor
         for (RadioButton radio : listRadioButtons) {
             Log.i("Radio", radio.toString() + " " + radio.isChecked());
+
+            if(radio.isChecked())
+                validarResposta(radio);
+
             if (!radio.isChecked())
                 radio.setTextColor(getResources().getColor(R.color.primaryText));
         }
+    }
+
+    private void atualizaLayout(){
+        Log.i("Debug", listQuestions.get(0).getQuestion());
+        questionText.setText(listQuestions.get(0).getQuestion());
+        radioButton1.setText(listQuestions.get(0).getOption1());
+        radioButton2.setText(listQuestions.get(0).getOption2());
+        radioButton3.setText(listQuestions.get(0).getOption3());
+    }
+// Comparar o opção com a resposta correta
+    private void validarResposta(RadioButton radioChecked){
+        int respostaCorreta = listQuestions.get(0).getAnswer();
+        Log.i("Resposta", (String) radioChecked.getText() + "  " + respostaCorreta);
     }
 
     // Classe interna que faz a requisição na base de dados de perguntas
@@ -168,6 +188,7 @@ public class MainActivity extends AppCompatActivity {
                 JSONObject listaJson = new JSONObject(result);
                 JSONArray questions = listaJson.getJSONArray("questions");
 
+                // Mapeamento da base de dados com o modelo
                 for (int i = 0 ; i < questions.length() ; i ++) {
                     JSONObject question = questions.getJSONObject(i);
 
@@ -181,6 +202,7 @@ public class MainActivity extends AppCompatActivity {
                     listQuestions.add(questionModel);
                 }
 
+                atualizaLayout();
                 Log.i("Question Main", listQuestions.get(0).getOption2());
 
 
