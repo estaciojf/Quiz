@@ -2,7 +2,7 @@
 
 Fluxo de trabalho nos branchs:
 
-**Branch master sempre terá a versão mais atualizada.
+**Branch master sempre terá a versão mais atualizada.**
 
 1- **radio**: RadioGroup, RadioButton, List<>, onCheckedChanged
 
